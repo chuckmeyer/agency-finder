@@ -3,7 +3,8 @@ import React from 'react';
 import algoliasearch from 'algoliasearch/lite';
 import './Form.css';
 
-const indexName = process.env.REACT_APP_ALGOLIA_INDEX_NAME;
+const geoIndex = process.env.REACT_APP_ALGOLIA_INDEX_GEO;
+const statesIndex = process.env.REACT_APP_ALGOLIA_INDEX_STATES;
 const googleApiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 
 const searchClient = algoliasearch(
@@ -44,14 +45,19 @@ class AgencyFinderForm extends React.Component {
   }
 
   handleSubmit(event) {
-    this.index
+    this.geoIndex
       .search('', {
         aroundLatLng: this.state.geoCode,
         hitsPerPage: 10,
       })
       .then(({ hits }) => {
-        console.log(hits);
-        this.props.handleCallback(hits);
+        const geoHits = hits;
+        this.statesIndex.search(this.state.state, {        hitsPerPage: 10,
+        }).then(({ hits }) => {
+          let allHits = hits;
+          allHits.push(...geoHits);
+          this.props.handleCallback(allHits);
+        });
       });
   }
 
@@ -66,7 +72,6 @@ class AgencyFinderForm extends React.Component {
   handlePlaceSelect() {
     let addressObject = this.autocomplete.getPlace();
     let address = addressObject.address_components;
-    address.forEach(element => console.log(element.long_name));
     this.setState({
       streetAddress: `${address[0].long_name} ${address[1].short_name}`,
       city: address[3].long_name,
@@ -86,7 +91,8 @@ class AgencyFinderForm extends React.Component {
   }
 
   initSearch() {
-    this.index = searchClient.initIndex(indexName);
+    this.geoIndex = searchClient.initIndex(geoIndex);
+    this.statesIndex = searchClient.initIndex(statesIndex);
   }
 
   componentDidMount() {

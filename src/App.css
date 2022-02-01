@@ -6,15 +6,26 @@
   color: #61dafb;
 }
 
-.left-panel { float: left; width: 500px; }
-
-.right-panel { margin-left: 510px; }
-
-.search-results {
-  text-align: left;
-  margin-top: 20px;
-  margin-bottom: 20px;
+.App h1 {
+  background-color: skyblue;
   padding: 20px;
+  text-align: center;
+  font-size: 30px;
+  font-weight: 700;
+  color: #333;
+}
+
+.left-panel { 
+  float: left;
+  width: 400px; 
+}
+
+.right-panel { 
+  margin-left: 410px;
+}
+
+.instructions {
+  padding: 25px;
 }
 
 ul {
@@ -24,6 +35,7 @@ ul {
 ul li {
   margin-bottom: 5px;
   line-height: 1;
+  padding: .5rem .8rem .5rem .8rem;
 }
 
 ul li:nth-child(even) {
@@ -31,12 +43,13 @@ ul li:nth-child(even) {
 }
 
 ul li span:nth-child(odd) {
-  padding-right: 6px; 
+  padding-left: 6px;
+  font-weight: 500;
 }
 
 ul li span:nth-child(even) {
   float: right; 
-  padding-left: 6px;
+  padding-right: 6px; 
 }
 
 ul span {

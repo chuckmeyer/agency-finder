@@ -20,10 +20,9 @@ class AgencyFinder extends React.Component {
     return (
       <div>
         <h1>Find an Agency</h1>
+        <p className='instructions'>🔍 Search for your address to find the closest agencies.</p>
         <div className='left-panel'>
-          <div className="form-box">
-            <AgencyFinderForm handleCallback={this.handleCallback} />
-         </div>
+          <AgencyFinderForm handleCallback={this.handleCallback} />
         </div>
         <div className='right-panel'>
           <h2>Results</h2>
