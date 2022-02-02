@@ -6,7 +6,6 @@ import Checkbox from './Checkbox';
 
 const geoIndex = process.env.REACT_APP_ALGOLIA_INDEX_GEO;
 const statesIndex = process.env.REACT_APP_ALGOLIA_INDEX_STATES;
-// const googleApiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 
 const searchClient = algoliasearch(
   process.env.REACT_APP_ALGOLIA_APP_ID,
