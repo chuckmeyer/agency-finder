@@ -3,6 +3,7 @@ import React from 'react';
 import algoliasearch from 'algoliasearch/lite';
 import './Form.css';
 import Checkbox from './Checkbox';
+import jQuery from 'jquery';
 
 const geoIndex = process.env.REACT_APP_ALGOLIA_INDEX_GEO;
 const statesIndex = process.env.REACT_APP_ALGOLIA_INDEX_STATES;
@@ -82,11 +83,13 @@ class AgencyFinderForm extends React.Component {
   handlePlaceSelect() {
     let addressObject = this.autocomplete.getPlace();
     let address = addressObject.address_components;
+    var components={};
+    jQuery.each(address, function(k,v1) {jQuery.each(v1.types, function(k2, v2){components[v2]=v1.short_name});});
     this.setState({
-      streetAddress: `${address[0].long_name} ${address[1].short_name}`,
-      city: address[3].long_name,
-      state: address[5].short_name,
-      zipCode: address[7].short_name,
+      streetAddress: `${components.street_number} ${components.route}`,
+      city: components.locality,
+      state: components.administrative_area_level_1,
+      zipCode: components.postal_code,
       geoCode: addressObject.geometry.location.lat() + ', ' + addressObject.geometry.location.lng(),
       googleMapLink: addressObject.url
     });
