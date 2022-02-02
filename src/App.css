@@ -27,31 +27,3 @@
 .instructions {
   padding: 25px;
 }
-
-ul {
-  list-style: none;
-}
-
-ul li {
-  margin-bottom: 5px;
-  line-height: 1;
-  padding: .5rem .8rem .5rem .8rem;
-}
-
-ul li:nth-child(even) {
-  background-color: lightskyblue;
-}
-
-ul li span:nth-child(odd) {
-  padding-left: 6px;
-  font-weight: 500;
-}
-
-ul li span:nth-child(even) {
-  float: right; 
-  padding-right: 6px; 
-}
-
-ul span {
-  position: relative;
-}

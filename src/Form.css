@@ -44,3 +44,31 @@
   margin-bottom: 20px;
   padding: 20px;
 }
+
+.search-results ul {
+  list-style: none;
+}
+
+.search-results ul li {
+  margin-bottom: 5px;
+  line-height: 1;
+  padding: .5rem .8rem .5rem .8rem;
+}
+
+.search-results ul li:nth-child(even) {
+  background-color: lightskyblue;
+}
+
+.search-results ul li span:nth-child(odd) {
+  padding-left: 6px;
+  font-weight: 500;
+}
+
+.search-results ul li span:nth-child(even) {
+  float: right; 
+  padding-right: 6px; 
+}
+
+.search-results ul span {
+  position: relative;
+}
