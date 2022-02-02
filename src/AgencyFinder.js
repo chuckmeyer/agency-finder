@@ -21,12 +21,10 @@ class AgencyFinder extends React.Component {
 
   renderForm = (status) => {
     switch (status) {
-      case Status.LOADING:
-        return <h3>{status} ...</h3>;
-      case Status.FAILURE:
-        return <h3>{status} ...</h3>;
       case Status.SUCCESS:
-        return <AgencyFinderForm handleCallback={this.handleCallback} />
+        return <AgencyFinderForm handleCallback={this.handleCallback} />;
+      default:
+        return <h3>{status} ...</h3>;
       }
   };
 

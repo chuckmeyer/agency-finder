@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Agency Finder",
+  "name": "Agency Finder",
   "icons": [
     {
       "src": "favicon.ico",
