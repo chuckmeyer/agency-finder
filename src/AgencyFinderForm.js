@@ -117,7 +117,6 @@ class AgencyFinderForm extends React.Component {
           <input
             id="autocomplete"
             className="input-field"
-            ref="input"
             type="text"
           />
 

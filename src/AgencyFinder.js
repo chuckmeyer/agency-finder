@@ -1,6 +1,7 @@
 import React from 'react';
 import { AgencyFinderForm } from './AgencyFinderForm';
 import { AgencyFinderResults } from './AgencyFinderResults';
+import { Wrapper, Status } from "@googlemaps/react-wrapper";
 
 class AgencyFinder extends React.Component {
   constructor(props) {
@@ -8,13 +9,26 @@ class AgencyFinder extends React.Component {
     this.state = {
       results: null,
     };
+    this.renderForm = this.renderForm.bind(this);
+
   }
 
-  handleCallback= (input) => {
+  handleCallback = (input) => {
     this.setState({
       results: input,
     });
   }
+
+  renderForm = (status) => {
+    switch (status) {
+      case Status.LOADING:
+        return <h3>{status} ...</h3>;
+      case Status.FAILURE:
+        return <h3>{status} ...</h3>;
+      case Status.SUCCESS:
+        return <AgencyFinderForm handleCallback={this.handleCallback} />
+      }
+  };
 
   render() {
     return (
@@ -22,7 +36,7 @@ class AgencyFinder extends React.Component {
         <h1>Find an Agency</h1>
         <p className='instructions'>🔍 Search for your address to find the closest agencies.</p>
         <div className='left-panel'>
-          <AgencyFinderForm handleCallback={this.handleCallback} />
+          <Wrapper apiKey={process.env.REACT_APP_GOOGLE_API_KEY} render={this.renderForm} libraries={["places"]} />
         </div>
         <div className='right-panel'>
           <h2>Results</h2>
