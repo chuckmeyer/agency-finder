@@ -2,6 +2,7 @@
 import React from 'react';
 import algoliasearch from 'algoliasearch/lite';
 import './Form.css';
+import Checkbox from './Checkbox';
 
 const geoIndex = process.env.REACT_APP_ALGOLIA_INDEX_GEO;
 const statesIndex = process.env.REACT_APP_ALGOLIA_INDEX_STATES;
@@ -27,6 +28,7 @@ class AgencyFinderForm extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleClear = this.handleClear.bind(this);
+    this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
   }
 
   initialState() {
@@ -37,6 +39,7 @@ class AgencyFinderForm extends React.Component {
       zipCode: '',
       geoCode: '',
       googleMapLink: '',
+      preferred: false,
     };
   }
 
@@ -44,21 +47,29 @@ class AgencyFinderForm extends React.Component {
     this.setState({ [event.target.name]: event.target.value });
   }
 
+  handleCheckboxChange(event) {
+    this.setState({ [event.target.name]: event.target.checked });
+  }
+
   handleSubmit(event) {
     this.geoIndex
       .search('', {
         aroundLatLng: this.state.geoCode,
+        facetFilters: [ this.state.preferred ? 'preferred:true' : '' ],
         hitsPerPage: 10,
       })
       .then(({ hits }) => {
         const geoHits = hits;
-        this.statesIndex.search(this.state.state, {        hitsPerPage: 10,
-        }).then(({ hits }) => {
-          let allHits = hits;
-          allHits.push(...geoHits);
-          this.props.handleCallback(allHits);
-        });
-      });
+        this.statesIndex
+          .search(this.state.state, {
+            hitsPerPage: 10,
+          })
+          .then(({ hits }) => {
+            let allHits = hits;
+            allHits.push(...geoHits);
+            this.props.handleCallback(allHits);
+          });
+      });    
   }
 
   handleClear() {
@@ -135,6 +146,15 @@ class AgencyFinderForm extends React.Component {
             placeholder={'Zipcode'}
             onChange={this.handleChange}
           />
+          <label>
+            {/* Built with a ton of help form https://medium.com/@colebemis/building-a-checkbox-component-with-react-and-styled-components-8d3aa1d826dd */}
+            <Checkbox
+              name='preferred'
+              checked={this.state.preferred}
+              onChange={this.handleCheckboxChange}  
+            />
+            <span style={{ marginLeft: 8 }}>Preferred Agencies</span>
+          </label>
         </form>
         <button onClick={this.handleSubmit}>Submit</button>
         <button onClick={this.handleClear}>Clear</button>
