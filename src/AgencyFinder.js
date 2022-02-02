@@ -2,6 +2,7 @@ import React from 'react';
 import { AgencyFinderForm } from './AgencyFinderForm';
 import { AgencyFinderResults } from './AgencyFinderResults';
 import { Wrapper, Status } from "@googlemaps/react-wrapper";
+import './AgencyFinder.css';
 
 class AgencyFinder extends React.Component {
   constructor(props) {
@@ -37,7 +38,6 @@ class AgencyFinder extends React.Component {
           <Wrapper apiKey={process.env.REACT_APP_GOOGLE_API_KEY} render={this.renderForm} libraries={["places"]} />
         </div>
         <div className='right-panel'>
-          <h2>Results</h2>
           <AgencyFinderResults hits={this.state.results} />
         </div>
       </div>

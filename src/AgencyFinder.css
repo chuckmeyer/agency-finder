@@ -1,3 +1,17 @@
+
+.left-panel { 
+  float: left;
+  width: 500px; 
+}
+
+.right-panel { 
+  margin-left: 510px;
+}
+
+.instructions {
+  padding: 25px;
+}
+
 *{
   box-sizing: border-box;
   margin: 0;
@@ -20,6 +34,11 @@
   border: 1px solid #ccc;
   border-radius: 5px;
   font-size: 20px;
+}
+
+.search-form input:read-only {
+  background-color: #f5f5f5;
+  font-size: 16px;
 }
 
 .search-form button{
@@ -53,6 +72,7 @@
   margin-bottom: 5px;
   line-height: 1;
   padding: .5rem .8rem .5rem .8rem;
+  font-size: 16px;
 }
 
 .search-results ul li:nth-child(even) {

@@ -1,7 +1,6 @@
 /* global google */
 import React from 'react';
 import algoliasearch from 'algoliasearch/lite';
-import './Form.css';
 import Checkbox from './Checkbox';
 import jQuery from 'jquery';
 
@@ -124,24 +123,28 @@ class AgencyFinderForm extends React.Component {
           />
 
           <input
+            readOnly
             name={'streetAddress'}
             value={this.state.streetAddress}
             placeholder={'Street Address'}
             onChange={this.handleChange}
           />
           <input
+            readOnly
             name={'city'}
             value={this.state.city}
             placeholder={'City'}
             onChange={this.handleChange}
           />
           <input
+            readOnly
             name={'state'}
             value={this.state.state}
             placeholder={'State'}
             onChange={this.handleChange}
           />
           <input
+            readOnly
             name={'zipCode'}
             value={this.state.zipCode}
             placeholder={'Zipcode'}
@@ -157,7 +160,7 @@ class AgencyFinderForm extends React.Component {
             <span style={{ marginLeft: 8 }}>Preferred Agencies</span>
           </label>
         </form>
-        <button onClick={this.handleSubmit}>Submit</button>
+        <button onClick={this.handleSubmit}>Search</button>
         <button onClick={this.handleClear}>Clear</button>
       </div>
     );

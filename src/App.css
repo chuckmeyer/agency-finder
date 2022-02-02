@@ -15,15 +15,3 @@
   color: #333;
 }
 
-.left-panel { 
-  float: left;
-  width: 500px; 
-}
-
-.right-panel { 
-  margin-left: 510px;
-}
-
-.instructions {
-  padding: 25px;
-}
