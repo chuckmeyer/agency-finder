@@ -11,7 +11,6 @@ class AgencyFinder extends React.Component {
       results: null,
     };
     this.renderForm = this.renderForm.bind(this);
-
   }
 
   handleCallback = (input) => {
@@ -26,8 +25,8 @@ class AgencyFinder extends React.Component {
         return <AgencyFinderForm handleCallback={this.handleCallback} />;
       default:
         return <h3>{status} ...</h3>;
-      }
-  };
+      };
+  }
 
   render() {
     return (

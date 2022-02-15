@@ -7,11 +7,6 @@ import jQuery from 'jquery';
 const geoIndex = process.env.REACT_APP_ALGOLIA_INDEX_GEO;
 const statesIndex = process.env.REACT_APP_ALGOLIA_INDEX_STATES;
 
-const searchClient = algoliasearch(
-  process.env.REACT_APP_ALGOLIA_APP_ID,
-  process.env.REACT_APP_ALGOLIA_API_KEY
-);
-
 class AgencyFinderForm extends React.Component {
   constructor(props) {
     super(props);
@@ -51,24 +46,30 @@ class AgencyFinderForm extends React.Component {
   }
 
   handleSubmit(event) {
-    this.geoIndex
-      .search('', {
+    const queries = [{
+      indexName: statesIndex,
+      query: this.state.state,
+      params: {
+        hitsPerPage: 10
+      }
+    }, {
+      indexName: geoIndex,
+      query: '',
+      params: {
         aroundLatLng: this.state.geoCode,
         facetFilters: [ this.state.preferred ? 'preferred:true' : '' ],
         hitsPerPage: 10,
-      })
-      .then(({ hits }) => {
-        const geoHits = hits;
-        this.statesIndex
-          .search(this.state.state, {
-            hitsPerPage: 10,
-          })
-          .then(({ hits }) => {
-            let allHits = hits;
-            allHits.push(...geoHits);
-            this.props.handleCallback(allHits);
-          });
-      });    
+      }
+    }];
+    
+    this.searchClient.multipleQueries(queries).then(({ results }) => {
+      console.log(results);
+      let allHits = [];
+      results.map((result) => {
+        allHits.push(...result.hits);
+      });
+      this.props.handleCallback(allHits);
+    });
   }
 
   handleClear() {
@@ -103,8 +104,10 @@ class AgencyFinderForm extends React.Component {
   }
 
   initSearch() {
-    this.geoIndex = searchClient.initIndex(geoIndex);
-    this.statesIndex = searchClient.initIndex(statesIndex);
+    this.searchClient = algoliasearch(
+      process.env.REACT_APP_ALGOLIA_APP_ID,
+      process.env.REACT_APP_ALGOLIA_API_KEY
+    );
   }
 
   componentDidMount() {
@@ -151,7 +154,7 @@ class AgencyFinderForm extends React.Component {
             onChange={this.handleChange}
           />
           <label>
-            {/* Built with a ton of help form https://medium.com/@colebemis/building-a-checkbox-component-with-react-and-styled-components-8d3aa1d826dd */}
+            {/* Built with a ton of help from https://medium.com/@colebemis/building-a-checkbox-component-with-react-and-styled-components-8d3aa1d826dd */}
             <Checkbox
               name='preferred'
               checked={this.state.preferred}
