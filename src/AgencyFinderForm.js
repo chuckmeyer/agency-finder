@@ -66,7 +66,7 @@ class AgencyFinderForm extends React.Component {
       console.log(results);
       let allHits = [];
       results.map((result) => {
-        allHits.push(...result.hits);
+        return allHits.push(...result.hits);
       });
       this.props.handleCallback(allHits);
     });
